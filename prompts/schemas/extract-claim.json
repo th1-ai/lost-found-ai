@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "required": ["guest_name", "contact", "description", "stay_note", "needs_human"],
+  "additionalProperties": false,
+  "properties": {
+    "guest_name": {"type": "string", "minLength": 1, "maxLength": 200},
+    "contact": {"type": "string", "minLength": 3, "maxLength": 200},
+    "description": {"type": "string", "minLength": 1, "maxLength": 2000},
+    "description_en": {"type": "string", "maxLength": 2000},
+    "stay_note": {"type": "string", "maxLength": 500},
+    "needs_human": {"type": "boolean"}
+  }
+}

@@ -1,0 +1,95 @@
+# ---------------------------------------------------------------------------
+# agent.yaml - Lost & Found AI's own knobs. `make setup` copies this to
+# config/agent.yaml; edit that copy, this example stays as a clean reference.
+#
+# Lost & Found AI logs found items, matches inbound guest claims to the log,
+# drafts a return email for each confident match, and (once approved) arranges
+# a simulated paid return shipment with a tracking number. It never auto-sends
+# and never auto-ships: every match and every shipment waits for a person.
+# ---------------------------------------------------------------------------
+
+# Which of pms/email/messaging this agent actually reads from - it never
+# touches the PMS at all, and messaging is send-only (the staff notify and
+# the courier confirmation). Keeps `make run`'s SAMPLE DATA warning honest
+# when `systems.pms.adapter`/`systems.messaging.adapter` are left as `mock`.
+# See core/adapters/__init__.py:_systems_used.
+systems_used: [email]
+
+lost_found:
+  # A pair scores 0-100+; anything below this is never proposed as a match,
+  # however close. Raise it if you see near-misses queued; lower it once you
+  # have watched the matcher for a while and trust it. The spec's own number.
+  match_threshold: 60
+
+  # Families where two different categories read alike in free text but are
+  # never the same object (reading glasses vs. sunglasses). A pair that lands
+  # in the same confusable family but a different category is hard-vetoed to
+  # score 0 - no partial credit - and the rationale says why. See
+  # docs/how-it-works.md "The confusable-family veto".
+  confusable_families:
+    - eyewear
+
+  # Categories that always route to the duty manager before anything ships,
+  # no matter how confident the match (roster "cant": "High-value items
+  # (passports, jewellery) route to the duty manager before anything ships").
+  # tools/review.py approve refuses these without --duty-manager-ack.
+  high_value_families:
+    - jewellery
+    - documents
+
+  # Categories beyond the 12 built into tools/engine.py:CATEGORIES (soft toy,
+  # earphones, jewellery, sunglasses, reading glasses, documents, charger,
+  # e-reader, fleece, jacket, belt, watch). Listing a category in
+  # knowledge/lost-and-found-policy.md only changes what the agent talks
+  # about - the MATCHER only scores a category it has keywords for, and that
+  # is here, not there. Leave empty to use the 12 built-in categories only.
+  extra_categories: []
+  # extra_categories:
+  #   - id: beach_towel                          # any short, unique id
+  #     family: beach_gear                        # group with anything else
+  #                                                # that should never be
+  #                                                # confused with it
+  #     label: "beach towel"                      # used in rationale text
+  #     keywords: ["beach towel", "pool towel"]    # matched case-insensitively
+
+  # Where the found-items log lives. `sheet`: systems.sheets.adapter reads a
+  # sheet/file named below. `fixtures`: read fixtures/hotel/found_items.csv
+  # directly - used automatically by `make demo`, do not set this for real use.
+  intake:
+    source: sheet
+    found_items_sheet: found_items   # data/imports/found_items.csv, or a
+                                       # Google Sheet tab of the same name
+
+  # How long an unmatched claim stays open before it is marked expired and the
+  # duty manager is pinged instead of it sitting open forever silently.
+  sweep_days: 14
+
+  # What "Approve return / ship" writes and hands the guest.
+  shipping:
+    hold_days: 90            # how long an unclaimed, unshipped item is held
+    courier_note: "tracked courier, postage paid by the hotel"
+
+  # Return-email signature block. Falls back to the hotel's own name and
+  # contact email from config/hotel.yaml when left blank.
+  signature:
+    team_name: "Housekeeping"
+
+# Lost & Found AI never sends or ships on its own. This is not a switch that
+# turns autonomy on - it documents the fact for docs/how-it-works.md and
+# tools/report.py. The real gates are `mode: shadow` in config/hotel.yaml,
+# review.require_approval_for, and the high-value duty-manager check above,
+# all enforced in code (core/review.py and tools/review.py).
+autonomy: draft
+
+# How often `tools/run.py --watch` polls for new mail and new found-item rows,
+# and what `make schedule` prints. See scheduler/ for cron/launchd/systemd
+# snippets. One entry per recurring job, each with its own command: and
+# cadence: - `make schedule ARGS="--all"` prints one snippet per entry.
+# match_claims is the whole loop in one pass: found-items intake, turning new
+# guest emails into claims, matching, AND the 14-day stale-claim sweep
+# (`workflows/10-match-claims.md`) - there is no separate sweep script to
+# schedule.
+schedule:
+  match_claims:
+    command: "tools/run.py --once"
+    cadence: "*/30 * * * *"   # every 30 minutes

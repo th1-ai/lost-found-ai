@@ -1,0 +1,8 @@
+{
+  "id": "claim-06-passport-highvalue",
+  "from": "thomas.berger@example.com",
+  "from_name": "Thomas Berger",
+  "subject": "URGENT - lost passport",
+  "body": "Hello,\n\nI must have dropped my EU passport at reception yesterday, burgundy cover. I need it for a flight in two days, please let me know urgently if it has been found.\n\nThomas Berger",
+  "received_at": "2026-08-26T10:30:00+00:00"
+}

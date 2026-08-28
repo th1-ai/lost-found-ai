@@ -1,0 +1,11 @@
+id,item,description,found_where,found_days_ago,photo_url,reported_by
+fi-01,"Silver bracelet with a small anchor charm","Ladies bracelet, silver chain, anchor charm",Bar,2,https://example.com/photos/fi-01.jpg,Housekeeping
+fi-02,"Sunglasses, tortoiseshell frame","Designer sunglasses, no case",Lobby,4,https://example.com/photos/fi-02.jpg,Housekeeping
+fi-03,"Garmin watch charger","USB charging cable for a Garmin sports watch","Breakfast room",1,https://example.com/photos/fi-03.jpg,Breakfast staff
+fi-04,"EU passport, burgundy cover","Passport found under the reception desk",Reception,1,https://example.com/photos/fi-04.jpg,Front desk
+fi-05,"Kindle Paperwhite e-reader","Black Kindle Paperwhite, cracked corner",Lobby,2,https://example.com/photos/fi-05.jpg,Housekeeping
+fi-06,"Gold hoop earring (single)","One gold hoop earring, no pair",Reception,5,https://example.com/photos/fi-06.jpg,Front desk
+fi-07,"Navy blazer","Men's navy blazer, size L","Breakfast room",2,https://example.com/photos/fi-07.jpg,Breakfast staff
+fi-08,"AirPods Pro case","White charging case, no earbuds inside",Bar,1,https://example.com/photos/fi-08.jpg,Bar staff
+fi-09,"Belt, buckle engraved ""J.M.""","Brown leather belt","Laundry room",3,https://example.com/photos/fi-09.jpg,Laundry
+fi-10,"Black umbrella","Plain black umbrella, no markings",Lobby,6,https://example.com/photos/fi-10.jpg,Housekeeping

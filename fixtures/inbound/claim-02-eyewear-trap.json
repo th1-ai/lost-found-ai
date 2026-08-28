@@ -1,0 +1,8 @@
+{
+  "id": "claim-02-eyewear-trap",
+  "from": "owen.clarke@example.com",
+  "from_name": "Owen Clarke",
+  "subject": "Reading glasses left behind",
+  "body": "Hi there,\n\nI left my tortoiseshell reading glasses in a red case at reception when I checked out. Any chance they turned up?\n\nBest,\nOwen",
+  "received_at": "2026-08-25T11:02:00+00:00"
+}

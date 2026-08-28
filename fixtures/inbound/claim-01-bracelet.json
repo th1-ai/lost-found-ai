@@ -1,0 +1,8 @@
+{
+  "id": "claim-01-bracelet",
+  "from": "priya.shah@example.com",
+  "from_name": "Priya Shah",
+  "subject": "Lost a bracelet during my stay",
+  "body": "Hello,\n\nI think I lost a silver bracelet with a small anchor charm - I was near the bar last weekend and I'm not sure it made it back into my bag. Could someone check if it has been handed in?\n\nThanks,\nPriya",
+  "received_at": "2026-08-25T09:14:00+00:00"
+}

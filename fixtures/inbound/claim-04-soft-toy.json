@@ -1,0 +1,8 @@
+{
+  "id": "claim-04-soft-toy",
+  "from": "marcus.lee@example.com",
+  "from_name": "Marcus Lee",
+  "subject": "My daughter's toy",
+  "body": "Hello, my daughter left her stuffed rabbit toy on the bed in our room when we checked out on Sunday. She has not stopped asking about it. Please let me know if housekeeping found it.\n\nThank you,\nMarcus",
+  "received_at": "2026-08-25T15:20:00+00:00"
+}
